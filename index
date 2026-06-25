@@ -1,0 +1,2109 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Patil Portfolio website</title>
+    <meta name="description" content="Harshawardhan Patil — Robotics · AI · Autonomous Driving Engineer, Stuttgart Germany.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme ? savedTheme : (systemDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', initialTheme);
+    </script>
+
+    <style>
+
+        :root[data-theme="dark"] {
+            --bg: #050510;
+            --bg2: #0b0b1f;
+            --bg3: #10102a;
+            --surface: rgba(255, 255, 255, .04);
+            --surface2: rgba(255, 255, 255, .07);
+            --border: rgba(255, 255, 255, .08);
+            --border2: rgba(255, 255, 255, .15);
+            --text: #e8e8f0;
+            --text2: #9090b0;
+            --text3: #5a5a7a;
+            --accent: #f97316;
+            --accent2: #38bdf8;
+            --accent3: #a78bfa;
+            --glow: rgba(249, 115, 22, .3);
+            --glow2: rgba(56, 189, 248, .2);
+            --ps: rgba(255, 255, 255, .13);
+        }
+
+        :root[data-theme="light"] {
+            --bg: #fff;
+            --bg2: #fff7ed;
+            --bg3: #fff;
+            --surface: rgba(249, 115, 22, .05);
+            --surface2: rgba(249, 115, 22, .1);
+            --border: rgba(249, 115, 22, .15);
+            --border2: rgba(249, 115, 22, .3);
+            --text: #1a0a00;
+            --text2: #6b3a1f;
+            --text3: #9a7a6a;
+            --accent: #ea580c;
+            --accent2: #0284c7;
+            --accent3: #7c3aed;
+            --glow: rgba(234, 88, 12, .3);
+            --glow2: rgba(2, 132, 199, .25);
+            --ps: rgba(234, 88, 12, .2);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Instrument Sans", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background .4s, color .4s;
+        }
+
+        #starfield {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #planets {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        #planets svg {
+            position: absolute;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 4%;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(5, 5, 16, .75);
+            border-bottom: 1px solid var(--border);
+            transition: background .4s;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] body {
+            background: #fff;
+        }
+
+        [data-theme="light"] body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 90% 70% at 5% 0%, rgba(249, 115, 22, .5) 0%, transparent 55%), 
+                        radial-gradient(ellipse 70% 60% at 95% 5%, rgba(56, 189, 248, .4) 0%, transparent 50%), 
+                        radial-gradient(ellipse 60% 50% at 85% 95%, rgba(167, 139, 250, .35) 0%, transparent 50%);
+            animation: meshshift 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes meshshift {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: .88; transform: scale(1.03); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        [data-theme="light"] #starfield {
+            opacity: 0;
+        }
+
+        [data-theme="light"] nav {
+            background: rgba(255, 255, 255, .8);
+            border-bottom: 1px solid rgba(234, 88, 12, .15);
+        }
+
+        [data-theme="light"] .stat-num {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        [data-theme="light"] .section-label {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        [data-theme="light"] .section-label::after {
+            background: linear-gradient(to right, var(--accent), var(--accent2));
+            opacity: .6;
+        }
+
+        [data-theme="light"] .hero-name .last {
+            -webkit-text-stroke-color: var(--accent);
+        }
+
+        [data-theme="light"] .hero-name .first {
+            background: linear-gradient(135deg, #ea580c, #0284c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        [data-theme="light"] .orb1 {
+            border-color: rgba(234, 88, 12, .25);
+        }
+
+        [data-theme="light"] .orb2 {
+            border-color: rgba(2, 132, 199, .2);
+        }
+
+        [data-theme="light"] .orb1::before {
+            background: #ea580c;
+            box-shadow: 0 0 20px rgba(234, 88, 12, .7);
+        }
+
+        [data-theme="light"] .orb2::before {
+            background: #0284c7;
+            box-shadow: 0 0 20px rgba(2, 132, 199, .7);
+        }
+
+        [data-theme="light"] .sg {
+            background: #fff;
+            border: 1px solid rgba(234, 88, 12, .15);
+            box-shadow: 0 2px 16px rgba(234, 88, 12, .07);
+            border-left: 3px solid var(--accent);
+        }
+
+        [data-theme="light"] .sg:hover {
+            border-left-color: var(--accent2);
+            box-shadow: 0 8px 32px rgba(234, 88, 12, .15);
+            transform: translateY(-4px);
+        }
+
+        [data-theme="light"] .tag {
+            background: linear-gradient(135deg, rgba(234, 88, 12, .08), rgba(2, 132, 199, .06));
+            border-color: rgba(234, 88, 12, .2);
+            color: var(--text2);
+        }
+
+        [data-theme="light"] .tag:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        [data-theme="light"] .pcard {
+            border: 1px solid rgba(234, 88, 12, .15);
+            background: #fff;
+            box-shadow: 0 4px 20px rgba(234, 88, 12, .07);
+        }
+
+        [data-theme="light"] .pcard:hover {
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(234, 88, 12, .18);
+        }
+
+        [data-theme="light"] .pcard::after {
+            background: linear-gradient(to right, #ea580c, #0284c7, #7c3aed);
+        }
+
+        [data-theme="light"] .edu-card {
+            border: 1px solid rgba(2, 132, 199, .2);
+            background: #fff;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, .07);
+            border-top: 3px solid var(--accent2);
+        }
+
+        [data-theme="light"] .edu-card:hover {
+            border-color: var(--accent2);
+            box-shadow: 0 12px 40px rgba(2, 132, 199, .16);
+        }
+
+        [data-theme="light"] .citem-icon {
+            background: #fff;
+            border: 2px solid rgba(234, 88, 12, .2);
+            box-shadow: 0 4px 16px rgba(234, 88, 12, .08);
+        }
+
+        [data-theme="light"] .citem-icon:hover {
+            background: linear-gradient(135deg, rgba(234, 88, 12, .08), rgba(2, 132, 199, .08));
+            border-color: var(--accent);
+            box-shadow: 0 8px 28px rgba(234, 88, 12, .2);
+        }
+
+        [data-theme="light"] .resume-banner {
+            background: linear-gradient(135deg, rgba(234, 88, 12, .07), rgba(2, 132, 199, .07));
+            border: 1px solid rgba(234, 88, 12, .2);
+        }
+
+        [data-theme="light"] .section-divider {
+            background: linear-gradient(to right, transparent, rgba(234, 88, 12, .25), rgba(2, 132, 199, .15), transparent);
+        }
+
+        [data-theme="light"] .btn-primary {
+            background: linear-gradient(135deg, #ea580c, #0284c7);
+            border: none;
+            box-shadow: 0 6px 24px rgba(234, 88, 12, .35);
+        }
+
+        [data-theme="light"] .btn-primary:hover {
+            box-shadow: 0 10px 36px rgba(234, 88, 12, .45);
+            transform: translateY(-3px);
+        }
+
+        [data-theme="light"] .btn-ghost {
+            border-color: rgba(234, 88, 12, .3);
+            color: var(--accent);
+        }
+
+        [data-theme="light"] .btn-ghost:hover {
+            background: rgba(234, 88, 12, .06);
+            border-color: var(--accent);
+        }
+
+        [data-theme="light"] .btn-resume {
+            border-color: var(--accent2);
+            color: var(--accent2);
+            box-shadow: 0 4px 16px rgba(2, 132, 199, .2);
+        }
+
+        [data-theme="light"] .avatar-initials {
+            background: linear-gradient(135deg, #fff, #fff7ed);
+            box-shadow: 0 0 60px rgba(234, 88, 12, .25);
+        }
+
+        [data-theme="light"] .avatar-ring {
+            border-color: rgba(234, 88, 12, .3);
+        }
+
+        [data-theme="light"] .avatar-ring::before {
+            border-color: rgba(2, 132, 199, .25);
+        }
+
+        [data-theme="light"] .avatar-ring::after {
+            border-top-color: var(--accent);
+        }
+
+        [data-theme="light"] .scroll-line {
+            background: linear-gradient(to bottom, #ea580c, #0284c7, transparent);
+        }
+
+        [data-theme="light"] .planet-popup {
+            background: #fff;
+            border-color: rgba(234, 88, 12, .25);
+            box-shadow: 0 12px 40px rgba(234, 88, 12, .15);
+        }
+
+        [data-theme="light"] .picon {
+            background: linear-gradient(135deg, rgba(234, 88, 12, .08), rgba(2, 132, 199, .08));
+            border-color: rgba(234, 88, 12, .2);
+        }
+
+        .nav-logo {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -.02em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
+            list-style: none;
+            flex-shrink: 0;
+        }
+
+        .nav-links a {
+            font-family: "DM Mono", monospace;
+            font-size: .68rem;
+            color: var(--text2);
+            text-decoration: none;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            transition: color .2s;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .theme-btn {
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            border-radius: 20px;
+            padding: 5px 12px;
+            cursor: pointer;
+            font-family: "DM Mono", monospace;
+            font-size: .68rem;
+            color: var(--text2);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all .2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .theme-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 1.5px;
+            background: var(--text2);
+            display: block;
+        }
+
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 5% 60px;
+            z-index: 2;
+        }
+
+        .hero-eyebrow {
+            font-family: "DM Mono", monospace;
+            font-size: .75rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp .8s .2s forwards;
+        }
+
+        .hero-name {
+            font-family: "Syne", sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 800;
+            letter-spacing: -.03em;
+            line-height: .95;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp .8s .4s forwards;
+        }
+
+        .hero-name .first {
+            color: var(--text);
+        }
+
+        .hero-name .last {
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--accent);
+        }
+
+        .typewriter-wrap {
+            font-family: "DM Mono", monospace;
+            font-size: clamp(.85rem, 2vw, 1.1rem);
+            color: var(--text2);
+            margin-bottom: 2.5rem;
+            height: 1.6em;
+            opacity: 0;
+            animation: fadeUp .8s .6s forwards;
+        }
+
+        .cur {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--accent);
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+
+        .hero-desc {
+            max-width: 600px;
+            font-size: clamp(.88rem, 1.6vw, 1rem);
+            color: var(--text2);
+            line-height: 1.75;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp .8s .8s forwards;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeUp .8s 1s forwards;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-family: "Syne", sans-serif;
+            font-weight: 600;
+            font-size: .85rem;
+            letter-spacing: .05em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .25s;
+            box-shadow: 0 0 30px var(--glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px var(--glow);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border2);
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-family: "Syne", sans-serif;
+            font-weight: 600;
+            font-size: .85rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .25s;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-resume {
+            background: transparent;
+            color: var(--accent2);
+            border: 1px solid var(--accent2);
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-family: "Syne", sans-serif;
+            font-weight: 600;
+            font-size: .85rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .25s;
+            box-shadow: 0 0 20px var(--glow2);
+        }
+
+        .btn-resume:hover {
+            background: var(--accent2);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .orbit {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+        }
+
+        .orb1 {
+            width: 500px;
+            height: 500px;
+            animation: orbspin 30s linear infinite;
+        }
+
+        .orb1::before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--accent2);
+            border-radius: 50%;
+            top: -5px;
+            left: 50%;
+            box-shadow: 0 0 20px var(--accent2);
+        }
+
+        .orb2 {
+            width: 700px;
+            height: 700px;
+            border-style: dashed;
+            animation: orbspin 50s linear infinite reverse;
+        }
+
+        .orb2::before {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: var(--accent3);
+            border-radius: 50%;
+            top: -3.5px;
+            left: 50%;
+            box-shadow: 0 0 20px var(--accent3);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeUp .8s 1.4s forwards;
+        }
+
+        .scroll-hint span {
+            font-family: "DM Mono", monospace;
+            font-size: .65rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text3);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+
+        section {
+            position: relative;
+            z-index: 2;
+            padding: 70px 5%;
+        }
+
+        .section-label {
+            font-family: "DM Mono", monospace;
+            font-size: .68rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: .5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::after {
+            content: "";
+            flex: 1;
+            max-width: 80px;
+            height: 1px;
+            background: var(--accent);
+            opacity: .4;
+        }
+
+        .section-title {
+            font-family: "Syne", sans-serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -.03em;
+            line-height: 1.05;
+            margin-bottom: 2rem;
+        }
+
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border2), transparent);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #about {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .avatar-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+        .avatar-ring {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            border: 2px solid var(--border2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .avatar-star-orbit {
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            animation: spinstar 15s linear infinite;
+            pointer-events: none;
+        }
+
+        .avatar-star {
+            position: absolute;
+            top: -9px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        @keyframes spinstar {
+            from { transform: translate(-50%, -50%) rotate(-45deg); }
+            to { transform: translate(-50%, -50%) rotate(315deg); }
+        }
+
+        .avatar-ring::before {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 1px dashed var(--border2);
+            animation: spin 20s linear infinite;
+        }
+
+        .avatar-ring::after {
+            content: "";
+            position: absolute;
+            inset: -40px;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            border-top-color: var(--accent);
+            animation: spin 15s linear infinite reverse;
+        }
+
+        .avatar-initials {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--bg3), var(--bg2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Syne", sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--accent);
+            border: 1px solid var(--border2);
+            box-shadow: 0 0 60px var(--glow);
+        }
+
+        .about-intro {
+            font-size: .95rem;
+            line-height: 1.75;
+            color: var(--text2);
+            margin-bottom: .9rem;
+        }
+
+        .about-intro strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .75rem;
+            margin-top: 1.25rem;
+        }
+
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: border-color .2s, transform .2s;
+        }
+
+        .stat:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .stat-num {
+            font-family: "Syne", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .stat-lbl {
+            font-family: "DM Mono", monospace;
+            font-size: .65rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-top: 2px;
+        }
+
+        #skills {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sg {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            transition: border-color .3s, transform .3s;
+        }
+
+        .sg:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .sg-title {
+            font-family: "DM Mono", monospace;
+            font-size: .7rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            font-family: "DM Mono", monospace;
+            font-size: .72rem;
+            padding: 4px 12px;
+            border-radius: 3px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            transition: all .2s;
+            cursor: default;
+        }
+
+        .tag:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        #experience {
+            max-width: 1100px;
+            margin: 0 auto;
+            overflow: visible;
+        }
+
+        .solar-wrap {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: visible;
+            padding: 8px 0 10px;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+
+        .solar-svg-wrap {
+            min-width: 700px;
+            width: 100%;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .planet-popup {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            border-radius: 14px;
+            padding: 1.2rem 1.5rem;
+            min-width: 280px;
+            max-width: 340px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s, transform .2s;
+            transform: translateY(-4px);
+            z-index: 50;
+            text-align: left;
+            white-space: normal;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+            height: auto;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .planet-popup.show {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        .planet-popup::before {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 7px solid transparent;
+            border-bottom-color: var(--border2);
+        }
+
+        .popup-role {
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            font-size: .95rem;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .popup-co {
+            font-size: .85rem;
+            color: var(--accent);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .popup-period {
+            font-family: "DM Mono", monospace;
+            font-size: .72rem;
+            color: var(--text3);
+            letter-spacing: .04em;
+        }
+
+        .popup-period.cur {
+            color: var(--accent2);
+        }
+
+        .popup-desc {
+            font-size: .78rem;
+            color: var(--text2);
+            line-height: 1.6;
+            margin-top: 8px;
+        }
+
+        .planet-label-btn:hover .label-norm {
+            fill: var(--text);
+        }
+
+        .planet-label-btn:hover rect {
+            fill: rgba(255, 255, 255, .06);
+        }
+
+        .sol-click {
+            cursor: pointer;
+        }
+
+        .sol-click:hover {
+            opacity: .85;
+        }
+
+        #education {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .edu-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .3s, transform .3s;
+        }
+
+        .edu-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .edu-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at top right, var(--glow), transparent 70%);
+        }
+
+        .edu-deg {
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: .25rem;
+            line-height: 1.4;
+        }
+
+        .edu-sch {
+            font-family: "DM Mono", monospace;
+            font-size: .75rem;
+            color: var(--accent2);
+            letter-spacing: .05em;
+            margin-bottom: 1rem;
+        }
+
+        .edu-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .ebadge {
+            font-family: "DM Mono", monospace;
+            font-size: .7rem;
+            padding: 4px 10px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            color: var(--text3);
+        }
+
+        .ebadge.gpa {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        #projects {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .pcard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.4rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .3s, transform .3s;
+        }
+
+        .pcard:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .pcard::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent), var(--accent2));
+            transform: scaleX(0);
+            transition: transform .3s;
+            transform-origin: left;
+        }
+
+        .pcard:hover::after {
+            transform: scaleX(1);
+        }
+
+        .picon {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .pname {
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            font-size: .95rem;
+            color: var(--text);
+            margin-bottom: .4rem;
+        }
+
+        .pdesc {
+            font-size: .82rem;
+            color: var(--text2);
+            line-height: 1.65;
+            margin-bottom: .75rem;
+        }
+
+        .ptags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .ptag {
+            font-family: "DM Mono", monospace;
+            font-size: .62rem;
+            padding: 3px 8px;
+            border-radius: 3px;
+            background: var(--surface2);
+            color: var(--text3);
+            border: 1px solid var(--border);
+        }
+
+        .proj-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: "DM Mono", monospace;
+            font-size: .66rem;
+            color: var(--accent2);
+            border: 1px solid var(--accent2);
+            border-radius: 20px;
+            padding: 4px 12px;
+            text-decoration: none;
+            transition: all .2s;
+            margin-top: .6rem;
+        }
+
+        .proj-link:hover {
+            background: var(--accent2);
+            color: #fff;
+        }
+
+        #contact {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #contact .section-label {
+            justify-content: center;
+        }
+
+        #contact .section-label::after {
+            display: none;
+        }
+
+        .contact-desc {
+            font-size: 1rem;
+            color: var(--text2);
+            line-height: 1.8;
+            max-width: 520px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .resume-banner {
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 1.75rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 0 auto 2.5rem;
+            text-align: center;
+        }
+
+        .citem-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text2);
+            transition: all .25s;
+        }
+
+        .citem-icon:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--surface2);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px var(--glow);
+        }
+
+        footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem 5%;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            font-family: "DM Mono", monospace;
+            font-size: .72rem;
+            color: var(--text3);
+        }
+
+        footer span {
+            color: var(--accent);
+        }
+
+        .pub-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            transition: border-color .3s;
+        }
+
+        .pub-card:hover {
+            border-color: var(--accent);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes orbspin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes pdrift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-16px); }
+        }
+
+        @keyframes protate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes protateR {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        @media(max-width: 900px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                inset: 64px 0 0;
+                background: var(--bg);
+                padding: 2rem 5%;
+                gap: 1.5rem;
+                z-index: 99;
+                overflow: auto;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            #about {
+                grid-template-columns: 1fr;
+            }
+
+            .avatar-wrap {
+                display: none;
+            }
+
+            .orb1, .orb2 {
+                display: none;
+            }
+
+            #planets svg {
+                opacity: .35;
+            }
+
+            #tLabel {
+                display: none;
+            }
+
+            .resume-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .solar-wrap {
+                padding-bottom: 200px;
+            }
+
+            .section-title {
+                font-size: clamp(1.8rem, 6vw, 3rem) !important;
+            }
+
+            .hero-name {
+                font-size: clamp(2.5rem, 10vw, 7rem) !important;
+            }
+
+            .skills-grid, .proj-grid, .edu-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    
+    <div id="planets">
+        <svg width="220" height="220" viewBox="0 0 220 220" style="position:absolute;top:20px;right:10px;animation:pdrift 20s ease-in-out infinite;opacity:.55">
+            <g style="transform-origin:110px 110px;animation:protate 40s linear infinite">
+                <circle cx="110" cy="110" r="58" fill="none" stroke="var(--ps)" stroke-width="1.1"/>
+                <ellipse cx="110" cy="116" rx="90" ry="20" fill="none" stroke="var(--ps)" stroke-width="1.1" transform="rotate(-18 110 110)"/>
+            </g>
+        </svg>
+        <svg width="150" height="150" viewBox="0 0 150 150" style="position:absolute;top:30%;left:10px;animation:pdrift 25s ease-in-out infinite 4s;opacity:.5">
+            <g style="transform-origin:75px 75px;animation:protateR 35s linear infinite">
+                <circle cx="75" cy="75" r="50" fill="none" stroke="var(--ps)" stroke-width="1"/>
+                <path d="M40 44Q50 36 65 44Q74 38 80 52Q90 48 92 62Q84 74 72 68Q63 76 53 66Q40 62 40 44Z" fill="none" stroke="var(--ps)" stroke-width=".9"/>
+            </g>
+        </svg>
+        <svg width="130" height="130" viewBox="0 0 130 130" style="position:absolute;bottom:14%;left:15px;animation:pdrift 22s ease-in-out infinite 8s;opacity:.45">
+            <circle cx="65" cy="65" r="46" fill="none" stroke="var(--ps)" stroke-width="1"/>
+            <ellipse cx="65" cy="65" rx="46" ry="7" fill="none" stroke="var(--ps)" stroke-width="1.1"/>
+        </svg>
+        <svg width="145" height="145" viewBox="0 0 145 145" style="position:absolute;top:54%;right:12px;animation:pdrift 18s ease-in-out infinite 5s;opacity:.5">
+            <g style="transform-origin:72px 72px;animation:protate 28s linear infinite">
+                <circle cx="72" cy="72" r="36" fill="none" stroke="var(--ps)" stroke-width="1"/>
+                <ellipse cx="72" cy="76" rx="58" ry="12" fill="none" stroke="var(--ps)" stroke-width="1" transform="rotate(-8 72 72)"/>
+            </g>
+        </svg>
+        <svg width="56" height="56" viewBox="0 0 56 56" style="position:absolute;top:16%;left:22%;animation:pdrift 30s ease-in-out infinite 12s;opacity:.45">
+            <circle cx="28" cy="28" r="20" fill="none" stroke="var(--ps)" stroke-width=".8"/>
+        </svg>
+    </div>
+
+    <nav>
+        <a href="#hero" class="nav-logo">HP<span>.</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            <button class="theme-btn" onclick="toggleTheme()">
+                <span id="tIcon">☀</span>
+                <span id="tLabel">Light</span>
+            </button>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="orbit orb1"></div>
+        <div class="orbit orb2"></div>
+        <p class="hero-eyebrow">Robotics · AI · Autonomous Driving · Stuttgart, Germany</p>
+        <h1 class="hero-name"><span class="first">Harsh</span><br><span class="last">Patil</span></h1>
+        <div class="typewriter-wrap">
+            <span id="tw"></span><span class="cur"></span>
+        </div>
+        <p class="hero-desc">Building Systems that don't need me. Still looking for a job though.<br><br>Mechanical engineer turned Artificial Intelligence systems nerd, I make cars see, systems and robots think, and code compile (on the third try).</p>
+        <div class="hero-ctas">
+            <a href="#contact" class="btn-primary">Get in touch</a>
+            <a href="#projects" class="btn-ghost">See my work</a>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="about">
+        <div class="avatar-wrap">
+            <div class="avatar-ring">
+                <div class="avatar-initials">HP</div>
+                <div class="avatar-star-orbit">
+                    <div class="avatar-star">
+                        <svg width="18" height="18" viewBox="0 0 16 16">
+                            <path d="M8 0L9.2 5.8L15 8L9.2 10.2L8 16L6.8 10.2L1 8L6.8 5.8Z" fill="var(--accent2)" stroke="var(--accent2)" stroke-width=".3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="section-label">01 — About</p>
+            <h2 class="section-title">Engineer of things<br>that drive themselves</h2>
+            <p class="about-intro">I'm <strong>Harshawardhan Patil</strong>, but Harsh works just fine (unless I break production, then it's "the new guy"). Recent M.Eng. grad in <strong>Autonomous Driving</strong> from Hochschule Coburg (Grade 1.9, Thesis 1.0 at Daimler AG) with a mechanical engineering backbone and a dangerous obsession with making machines intelligent.</p>
+            <p class="about-intro">From building Computer Vision defect-detection systems at <strong>Bosch</strong> to developing zonal E/E architecture tools at <strong>Daimler AG</strong> and leading an 8-person autonomous driving team; I thrive where <strong>hardware meets software</strong>. Also, I captain football teams and play in a German Kreisliga. Multitasking is kind of my thing.</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-num">1.0</div>
+                    <div class="stat-lbl">Thesis Grade</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">80%</div>
+                    <div class="stat-lbl">mAP for Object Detection</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">95%</div>
+                    <div class="stat-lbl">Error Reduced in Perception</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="skills">
+        <p class="section-label">02 — Skills</p>
+        <h2 class="section-title">The arsenal</h2>
+        <div class="skills-grid">
+            <div class="sg">
+                <div class="sg-title"><span class="dot" style="background:var(--accent)"></span>Programming</div>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">C/C++</span>
+                    <span class="tag">MATLAB</span>
+                    <span class="tag">Bash</span>
+                    <span class="tag">CMake</span>
+                    <span class="tag">Go</span>
+                    <span class="tag">C#</span>
+
+                    
+                </div>
+            </div>
+            <div class="sg">
+                <div class="sg-title"><span class="dot" style="background:var(--accent2)"></span>AI / ML / Deep Learning</div>
+                <div class="tags">
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">TensorFlow</span>
+                    <span class="tag">OpenCV</span>
+                    <span class="tag">MediaPipe</span>
+                    <span class="tag">Scikit-learn</span>
+                    <span class="tag">LangChain</span>
+                    <span class="tag">Ollama</span>
+                    <span class="tag">YOLO</span>
+                    <span class="tag">DetectNet</span>
+                    <span class="tag">ONNX</span>
+                    <span class="tag">Computer Vision</span>
+                    <span class="tag">CNNs</span>
+                    <span class="tag">Transformers</span>
+                    <span class="tag">Prompt Engineering</span>
+                    <span class="tag">Model Optimization</span>
+
+                </div>
+            </div>
+            <div class="sg">
+                <div class="sg-title"><span class="dot" style="background:var(--accent3)"></span>Robotics & Autonomous Driving</div>
+                <div class="tags">
+                    <span class="tag">ROS2</span>
+                    <span class="tag">Sensor Fusion</span>
+                    <span class="tag">SLAM</span>
+                    <span class="tag">Path Planning</span>
+                    <span class="tag">LiDAR</span>
+                    <span class="tag">V2X (ETSI ITS)</span>
+                    <span class="tag">CARLA</span>
+                    <span class="tag">SUMO</span>
+                    <span class="tag">NVIDIA Jetson</span>
+                    <span class="tag">OptiTrack</span>
+                    <span class="tag">CAN Bus</span>
+                    <span class="tag">Trajectory Planning</span>
+                </div>
+            </div>
+            <div class="sg">
+                <div class="sg-title"><span class="dot" style="background:#f59e0b"></span>Automotive Standards</div>
+                <div class="tags">
+                    <span class="tag">AUTOSAR</span>
+                    <span class="tag">ISO 26262</span>
+                    <span class="tag">A-SPICE</span>
+                    <span class="tag">Zonal E/E Architecture</span>
+                    <span class="tag">V-Model</span>
+                    <span class="tag">Requirements Engineering</span>
+                    <span class="tag">FMEA</span>
+                </div>
+            </div>
+            <div class="sg">
+                <div class="sg-title"><span class="dot" style="background:#10b981"></span>Mechanical / CAD / CAE</div>
+                <div class="tags">
+                    <span class="tag">SolidWorks</span>
+                    <span class="tag">Siemens NX</span>
+                    <span class="tag">CATIA V5</span>
+                    <span class="tag">AutoCAD</span>
+                    <span class="tag">ANSYS</span>
+                    <span class="tag">PTC Creo</span>
+                    <span class="tag">GD&T</span>
+                    <span class="tag">FEA</span>
+                    <span class="tag">Simulink</span>
+                </div>
+            </div>
+            <div class="sg">
+                <div class="sg-title"><span class="dot" style="background:#ec4899"></span>DevOps & Tools</div>
+                <div class="tags">
+                    <span class="tag">Git / GitHub</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Linux</span>
+                    <span class="tag">CI/CD</span>
+                    <span class="tag">FastAPI</span>
+                    <span class="tag">Flask</span>
+                    <span class="tag">PyQt5</span>
+                    <span class="tag">REST APIs</span>
+                    <span class="tag">Agile / Scrum</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="experience">
+        <p class="section-label">03 — Experience</p>
+        <h2 class="section-title">Mission log</h2>
+        <div class="solar-wrap">
+            <div class="solar-svg-wrap">
+                <svg id="solarsys" viewBox="0 0 900 278" width="100%" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;display:block">
+                    <defs>
+                        <filter id="go" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="b"/>
+                            <feMerge>
+                                <feMergeNode in="b"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="gb" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="b"/>
+                            <feMerge>
+                                <feMergeNode in="b"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="gs" x="-60%" y="-60%" width="220%" height="220%">
+                            <feGaussianBlur stdDeviation="5" result="b"/>
+                            <feMerge>
+                                <feMergeNode in="b"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <clipPath id="c1"><circle r="20"/></clipPath>
+                        <clipPath id="c2"><circle r="28"/></clipPath>
+                        <clipPath id="c3"><circle r="38"/></clipPath>
+                        <clipPath id="c4"><circle r="46"/></clipPath>
+                    </defs>
+                    <line x1="155" y1="180" x2="880" y2="180" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="6 5" opacity=".5"/>
+                    <g filter="url(#gs)">
+                        <circle cx="90" cy="180" r="44" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+                        <circle cx="90" cy="180" r="30" fill="none" stroke="var(--accent)" stroke-width="1" opacity=".6"/>
+                        <circle cx="90" cy="178" r="16" fill="none" stroke="var(--accent)" stroke-width=".8" opacity=".4"/>
+                        <path d="M78 165Q90 174 102 165" fill="none" stroke="var(--accent)" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+                        <line x1="90" y1="132" x2="90" y2="116" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"/>
+                        <line x1="90" y1="228" x2="90" y2="244" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"/>
+                        <line x1="42" y1="180" x2="28" y2="180" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"/>
+                        <line x1="138" y1="180" x2="152" y2="180" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+                        <line x1="63" y1="133" x2="52" y2="122" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round"/>
+                        <line x1="117" y1="133" x2="128" y2="122" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round"/>
+                        <line x1="63" y1="187" x2="52" y2="198" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round"/>
+                        <line x1="117" y1="187" x2="128" y2="198" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round"/>
+                    </g>
+                    <text x="90" y="260" text-anchor="middle" font-family="'DM Mono',monospace" font-size="10" fill="var(--text3)" letter-spacing="1">2023</text>
+                    <g id="pl1" class="sol-click" transform="translate(250,180)" onclick="showPlanet('pl1')">
+                        <animateTransform attributeName="transform" type="translate" values="250,180;250,174;250,180" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+                        <circle r="20" fill="none" stroke="rgba(160,150,200,.8)" stroke-width="1.4"/>
+                        <circle cx="-4" cy="-5" r="4" fill="none" stroke="rgba(160,150,200,.5)" stroke-width=".8" clip-path="url(#c1)"/>
+                        <circle cx="5" cy="4" r="2.5" fill="none" stroke="rgba(160,150,200,.4)" stroke-width=".7" clip-path="url(#c1)"/>
+                    </g>
+                    <g onclick="showPlanet('pl1')" style="cursor:pointer" class="planet-label-btn">
+                        <rect x="190" y="180" width="120" height="18" fill="transparent" rx="4"/>
+                        <text x="250" y="218" text-anchor="middle" font-family="'DM Mono',monospace" font-size="13" font-weight="500" fill="var(--text2)" letter-spacing=".3" class="label-norm">Bosch Ltd.</text>
+                    </g>
+                    <g id="pl2" class="sol-click" transform="translate(460,180)" onclick="showPlanet('pl2')">
+                        <animateTransform attributeName="transform" type="translate" values="460,180;460,172;460,180" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="1s"/>
+                        <circle r="28" fill="none" stroke="rgba(100,190,200,.85)" stroke-width="1.5"/>
+                        <path d="M-18-4Q-9-8 0-4Q9 0 18-4" fill="none" stroke="rgba(100,190,200,.5)" stroke-width=".9" clip-path="url(#c2)"/>
+                        <path d="M-18 3Q-6-1 0 3Q8 7 18 3" fill="none" stroke="rgba(100,190,200,.6)" stroke-width="1.1" clip-path="url(#c2)"/>
+                        <path d="M-18 10Q-8 6 0 10Q9 14 18 10" fill="none" stroke="rgba(100,190,200,.4)" stroke-width=".8" clip-path="url(#c2)"/>
+                    </g>
+                    <g onclick="showPlanet('pl2')" style="cursor:pointer" class="planet-label-btn">
+                        <rect x="400" y="184" width="120" height="18" fill="transparent" rx="4"/>
+                        <text x="460" y="226" text-anchor="middle" font-family="'DM Mono',monospace" font-size="13" font-weight="500" fill="var(--text2)" letter-spacing=".3" class="label-norm">HS Coburg</text>
+                    </g>
+                    <g id="pl3" class="sol-click" transform="translate(670,180)" onclick="showPlanet('pl3')">
+                        <animateTransform attributeName="transform" type="translate" values="670,180;670,170;670,180" dur="6.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="2s"/>
+                        <ellipse rx="56" ry="10" fill="none" stroke="rgba(249,115,22,.35)" stroke-width="1.2" transform="rotate(-6)"/>
+                        <circle r="38" fill="none" stroke="rgba(249,115,22,.9)" stroke-width="1.6" filter="url(#go)"/>
+                        <path d="M-27-8Q-13-13 0-8Q13-3 27-8" fill="none" stroke="rgba(249,115,22,.5)" stroke-width="1" clip-path="url(#c3)"/>
+                        <path d="M-27 2Q-10-3 0 2Q12 7 27 2" fill="none" stroke="rgba(249,115,22,.6)" stroke-width="1.2" clip-path="url(#c3)"/>
+                    </g>
+                    <g onclick="showPlanet('pl3')" style="cursor:pointer" class="planet-label-btn">
+                        <rect x="610" y="192" width="120" height="18" fill="transparent" rx="4"/>
+                        <text x="670" y="236" text-anchor="middle" font-family="'DM Mono',monospace" font-size="13" font-weight="600" fill="var(--accent)" letter-spacing=".3">Daimler AG</text>
+                    </g>
+                    <g id="pl4" class="sol-click" transform="translate(850,180)" onclick="showPlanet('pl4')">
+                        <animateTransform attributeName="transform" type="translate" values="850,180;850,172;850,180" dur="5.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="3s"/>
+                        <ellipse rx="62" ry="12" fill="none" stroke="rgba(56,189,248,.3)" stroke-width="1.2" transform="rotate(-6)"/>
+                        <circle r="46" fill="none" stroke="rgba(56,189,248,.95)" stroke-width="1.8" filter="url(#gb)"/>
+                        <path d="M-34-10Q-17-16 0-10Q17-4 34-10" fill="none" stroke="rgba(56,189,248,.45)" stroke-width="1" clip-path="url(#c4)"/>
+                        <path d="M-34 0Q-14-6 0 0Q14 6 34 0" fill="none" stroke="rgba(56,189,248,.6)" stroke-width="1.3" clip-path="url(#c4)"/>
+                        <circle r="46" fill="none" stroke="rgba(56,189,248,.15)" stroke-width="6">
+                            <animate attributeName="r" values="46;54;46" dur="3s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values=".4;0;.4" dur="3s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g onclick="showPlanet('pl4')" style="cursor:pointer" class="planet-label-btn">
+                        <text x="850" y="244" text-anchor="middle" font-family="'DM Mono',monospace" font-size="14" font-weight="600" fill="var(--accent2)" letter-spacing=".3">Your Company ✦</text>
+                    </g>
+                    <text x="850" y="256" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8" fill="var(--accent2)" opacity=".7">Hiring me?</text>
+                </svg>
+                <div id="pp-pl1" class="planet-popup">
+                    <div class="popup-role">Project Trainee</div>
+                    <div class="popup-co">Bosch Ltd. · Nashik, India</div>
+                    <div class="popup-period">Jan 2023 — Jul 2023</div>
+                    <div class="popup-desc">Designed & deployed a Cognex-based 2D CV pipeline for real-time defect detection of fuel injectors on high-speed conveyors. Reduced production error rate by 95%. Integrated camera, lighting & optics for industrial-grade image acquisition.</div>
+                </div>
+                <div id="pp-pl2" class="planet-popup">
+                    <div class="popup-role">Autonomous Systems Engineer & Scrum Master</div>
+                    <div class="popup-co">Hochschule Coburg · Germany</div>
+                    <div class="popup-period">Oct 2023 — Feb 2025</div>
+                    <div class="popup-desc">Led 8-engineer team building ADAPT, a full-stack AD & automated parking solution with ROS2. YOLO object detection (88% mAP), LiDAR/camera sensor fusion, V2X comms, trajectory planning, CAN actuation. Deployed on NVIDIA Jetson.</div>
+                </div>
+                <div id="pp-pl3" class="planet-popup">
+                    <div class="popup-role">Software & Systems Engineer</div>
+                    <div class="popup-co">Daimler AG · Stuttgart, Germany</div>
+                    <div class="popup-period">Apr 2025 — Sep 2025</div>
+                    <div class="popup-desc">Developed ConvIO an ML framework automating domain-to-zonal E/E architecture for SDVs. 62.8% wiring harness reduction on a real electric truck (377 I/O points). PyQt5 MVC GUI, 10K Monte Carlo validation, Dijkstra routing. International team (DE, US, TR, BR, CN, IN). Thesis: 1.0.</div>
+                </div>
+                <div id="pp-pl4" class="planet-popup">
+                    <div class="popup-role">Your Next Engineer</div>
+                    <div class="popup-co">Could be your company!</div>
+                    <div class="popup-period cur" style="margin-bottom: 30px;">Available now ✦</div>
+                    <div class="popup-desc">Ready for full-time roles in robotics, AD, AI, software & mechanical engineering. Post-study visa, eligible for immediate employment. Open to relocate.</div>
+                </div>
+            </div>
+        </div>
+        <p style="font-family:'DM Mono',monospace;font-size:.8rem;color:var(--text2);text-align:center;margin-top:4px;letter-spacing:.06em">↑ click a planet to explore</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="education">
+        <p class="section-label">04 — Education</p>
+        <h2 class="section-title">Academic orbit</h2>
+        <div class="edu-grid">
+            <div class="edu-card">
+                <div class="edu-deg">Master of Engineering<br><span style="color:var(--accent)">Autonomous Driving</span></div>
+                <div class="edu-sch">Hochschule Coburg · Germany</div>
+                <div style="font-family:'DM Mono',monospace;font-size:.68rem;color:var(--text3);margin-bottom:.75rem">Thesis at Daimler AG (Grade 1.0) · Perception · ROS2 · Sensor Fusion · Path Planning</div>
+                <div class="edu-meta">
+                    <span class="ebadge">Oct 2023 — Mar 2026</span>
+                    <span class="ebadge gpa">Grade 1.9</span>
+                </div>
+            </div>
+            <div class="edu-card">
+                <div class="edu-deg">Bachelor of Engineering<br><span style="color:var(--accent2)">Mechanical Engineering</span></div>
+                <div class="edu-sch">KLS Gogte Institute of Technology · Belgaum, India</div>
+                <div style="font-family:'DM Mono',monospace;font-size:.68rem;color:var(--text3);margin-bottom:.75rem">SAE · ASME · EV Challenge (2nd Place) · Smart India Hackathon Finalist (Top 15)</div>
+                <div class="edu-meta">
+                    <span class="ebadge">Jun 2019 — Jul 2023</span>
+                    <span class="ebadge gpa">Grade A</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:2.5rem">
+            <p class="section-label">Publications</p>
+            <div class="pub-card">
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.3rem">ConvIO: A Framework for Convergence of I/Os in Automotive Zonal E/E Architectures</div>
+                <div style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--accent2)">IEEE Access · Submitted & Under Review</div>
+            </div>
+            <div class="pub-card">
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.3rem">Optimizing Cold Box Core Making: Sustainable Approach with Taguchi Technique</div>
+                <div style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--accent2)">Polish Academy of Sciences · Published Jan 2025</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="projects">
+        <p class="section-label">05 — Projects</p>
+        <h2 class="section-title">Built & shipped</h2>
+        <div class="proj-grid">
+            <div class="pcard">
+                <div class="picon">🔧</div>
+                <div class="pname">ConvIO — Zonal E/E Tool</div>
+                <div class="pdesc">ML optimization for SDV architectures. 5-stage pipeline: KD-Tree, Dijkstra, K-means clustering. 62.8% wiring harness reduction. 10K Monte Carlo validation. Built at Daimler AG.</div>
+                <div class="ptags">
+                    <span class="ptag">Python</span><span class="ptag">PyQt5</span><span class="ptag">scikit-learn</span><span class="ptag">NetworkX</span><span class="ptag">Dijkstra</span>
+                </div>
+                <a href="https://github.com/sca7r/Zonal-convergence-gui" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">🚗</div>
+                <div class="pname">ADAPT — Autonomous Vehicle</div>
+                <div class="pdesc">Full-stack AD with smart parking. YOLO (88% mAP), sensor fusion, V2X, pure-pursuit control, CAN actuation. Deployed on NVIDIA Jetson hardware.</div>
+                <div class="ptags">
+                    <span class="ptag">ROS2</span><span class="ptag">C++</span><span class="ptag">Python</span><span class="ptag">YOLO</span><span class="ptag">Jetson</span><span class="ptag">V2X</span>
+                </div>
+                <a href="https://github.com/sca7r/work-in-autonomous-driving" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">🚗</div>
+                <div class="pname">DepthTrack — 3D Dashcam Perception</div>
+                <div class="pdesc">Real-time monocular perception pipeline. YOLOv8 detection, Depth Anything V2 depth estimation, ByteTrack tracking, collision-risk scoring, and bird's-eye-view rendering, all from a single camera, no LiDAR.</div>
+                <div class="ptags">
+                    <span class="ptag">Python</span><span class="ptag">PyTorch</span><span class="ptag">YOLOv8</span><span class="ptag">OpenCV</span><span class="ptag">Transformers</span>
+                </div>
+                <a href="https://github.com/sca7r/DepthTrack" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">🤖</div>
+                <div class="pname">LokalAgent — Agentic AI</div>
+                <div class="pdesc">Local privacy-first MoE AI system. ReAct reasoning, dynamic RAM management (8-10 GB), tool orchestration. Runs fully offline on consumer hardware.</div>
+                <div class="ptags">
+                    <span class="ptag">Python</span><span class="ptag">LangChain</span><span class="ptag">Ollama</span><span class="ptag">Docker</span><span class="ptag">REST APIs</span>
+                </div>
+                <a href="https://github.com/sca7r/LokalAgent--Local-Agentic-AI-with-Ollama-LangChain" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">👁</div>
+                <div class="pname">Driver Monitoring System</div>
+                <div class="pdesc">Real-time CV tracking 478 facial + 21 hand landmarks. Eye Aspect Ratio drowsiness detection. FastAPI dashboard with MJPEG streaming & alerts.</div>
+                <div class="ptags">
+                    <span class="ptag">Python</span><span class="ptag">OpenCV</span><span class="ptag">MediaPipe</span><span class="ptag">FastAPI</span><span class="ptag">Qt</span>
+                </div>
+                <a href="https://github.com/sca7r/hand-and-face-tracking-with-sleep-awake-detection" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">📄</div>
+                <div class="pname">Local RAG for PDFs</div>
+                <div class="pdesc">Document Q&A with local LLMs, Qdrant vector DB, Docker. ONNX INT8 quantized cross-encoder for 3-4x speedup. Server-Sent Events for real-time streaming.</div>
+                <div class="ptags">
+                    <span class="ptag">Python</span><span class="ptag">FastAPI</span><span class="ptag">Qdrant</span><span class="ptag">Docker</span><span class="ptag">ONNX</span>
+                </div>
+                <a href="https://github.com/sca7r/Local-Embeddings-RAG" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">📡</div>
+                <div class="pname">Multi-Sensor Fusion</div>
+                <div class="pdesc">LiDAR-camera fusion for object detection. Temporal sync & spatial alignment. Enhanced reliability under dynamic lighting.</div>
+                <div class="ptags">
+                    <span class="ptag">C++</span><span class="ptag">Python</span><span class="ptag">LiDAR</span><span class="ptag">Sensor Fusion</span>
+                </div>
+                <a href="https://github.com/sca7r/work-in-autonomous-driving" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">🛑</div>
+                <div class="pname">Autonomous Emergency Braking</div>
+                <div class="pdesc">Real-time AEB with LiDAR obstacle detection & distance estimation. Braking decision logic with data logging & performance evaluation.</div>
+                <div class="ptags">
+                    <span class="ptag">Python</span><span class="ptag">LiDAR</span><span class="ptag">Safety Systems</span>
+                </div>
+                <a href="https://github.com/sca7r/work-in-autonomous-driving" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">🛤</div>
+                <div class="pname">Trajectory Planning & Parking</div>
+                <div class="pdesc">Waypoint pathfinding with parking maneuvers. Real-time obstacle avoidance via multi-sensor fusion. Smooth transitions & space alignment.</div>
+                <div class="ptags">
+                    <span class="ptag">Python</span><span class="ptag">ROS2</span><span class="ptag">Path Planning</span>
+                </div>
+                <a href="https://github.com/sca7r/work-in-autonomous-driving/tree/main/trajectory" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">📶</div>
+                <div class="pname">V2X Transceiver Module</div>
+                <div class="pdesc">ETSI ITS messaging hub (CAM, CPM, EVCSN). Serialization over ROS2 with low latency & robust error handling for infrastructure-vehicle comms.</div>
+                <div class="ptags">
+                    <span class="ptag">C++</span><span class="ptag">ROS2</span><span class="ptag">V2X</span><span class="ptag">ETSI ITS</span>
+                </div>
+                <a href="https://github.com/sca7r/work-in-autonomous-driving/tree/main/transceiver" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">📊</div>
+                <div class="pname">Requirements Tracker — Full-Stack System</div>
+                <div class="pdesc">Enterprise-grade requirements management platform with MoSCoW prioritization, lifecycle workflows, and effort estimation. Built on ASP.NET Core and React with a strongly typed API contract and scalable architecture.</div>
+                <div class="ptags">
+                    <span class="ptag">ASP.NET Core</span><span class="ptag">C#</span><span class="ptag">React</span><span class="ptag">TypeScript</span><span class="ptag">REST API</span><span class="ptag">EF Core</span><span class="ptag">PostgreSQL</span>
+                </div>
+                <a href="https://github.com/sca7r/Requirements-Tracker" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+            <div class="pcard">
+                <div class="picon">🛡️</div>
+                <div class="pname">Claims Copilot - AI Context Engineering</div>
+                <div class="pdesc">Production-grade AI copilot for insurance claims handlers, built on context engineering principles. Features skill-based routing, regulatory guardrails, smart policy detection, streaming inference, and a fully local eval pipeline with Claude-as-judge scoring across 18 adversarial test cases.</div>
+                <div class="ptags"><span class="ptag">Python</span><span class="ptag">Ollama</span><span class="ptag">deepseek-r1</span><span class="ptag">Streamlit</span><span class="ptag">Context Engineering</span><span class="ptag">LLM Evals</span><span class="ptag">Insurance AI</span>
+            </div>
+            <a href="https://github.com/sca7r/claims-copilot" target="_blank" class="proj-link">GitHub ↗</a>
+            </div>
+
+            <a href="https://github.com/sca7r" target="_blank" class="pcard" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;text-decoration:none;border-style:dashed">
+                <div style="width:48px;height:48px;border-radius:50%;background:var(--surface2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.3rem">🔗</div>
+                <div class="pname">More on GitHub</div>
+                <div class="pdesc" style="font-size:.8rem">Explore all repos & experiments</div>
+                <div style="margin-top:.5rem;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--accent2)">github.com/sca7r ↗</div>
+            </a>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="hobbies" style="max-width:1200px;margin:0 auto">
+        <p class="section-label">06 — Beyond the code</p>
+        <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:2.5rem">When the compiler<br>is resting</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem">
+            <div class="sg" style="text-align:center;padding:1.8rem 1.2rem">
+                <div style="font-size:1.5rem;margin-bottom:.8rem">⚽</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Football</div>
+                <div style="font-size:.78rem;color:var(--text2);line-height:1.5">Playing Kreisliga in Germany. Former captain & Player of the Match at Reliance Cup.</div>
+            </div>
+            <div class="sg" style="text-align:center;padding:1.8rem 1.2rem">
+                <div style="font-size:1.5rem;margin-bottom:.8rem">🏔</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Trekking & Extreme Sports</div>
+                <div style="font-size:.78rem;color:var(--text2);line-height:1.5">Mountains, altitude, Skydiving, Scubadiving and questionable decisions at high speeds.</div>
+            </div>
+            <div class="sg" style="text-align:center;padding:1.8rem 1.2rem">
+                <div style="font-size:1.5rem;margin-bottom:.8rem">🏃</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Running</div>
+                <div style="font-size:.78rem;color:var(--text2);line-height:1.5">Chasing PRs and sunrise views through Stuttgart's trails.</div>
+            </div>
+            <div class="sg" style="text-align:center;padding:1.8rem 1.2rem">
+                <div style="font-size:1.5rem;margin-bottom:.8rem">✈️</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Exploring</div>
+                <div style="font-size:.78rem;color:var(--text2);line-height:1.5">Always planning the next trip across Europe.</div>
+            </div>
+            <div class="sg" style="text-align:center;padding:1.8rem 1.2rem">
+                <div style="font-size:1.5rem;margin-bottom:.8rem">🍳</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Cooking</div>
+                <div style="font-size:.78rem;color:var(--text2);line-height:1.5">Indian spices meet German efficiency, experimental kitchen engineer.</div>
+            </div>
+            <div class="sg" style="text-align:center;padding:1.8rem 1.2rem">
+                <div style="font-size:1.5rem;margin-bottom:.8rem">💻</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Building Stuff</div>
+                <div style="font-size:.78rem;color:var(--text2);line-height:1.5">Side projects, hobby robots, and this very portfolio.</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="contact">
+        <p class="section-label">07 — Contact</p>
+        <h2 class="section-title">Let's build something</h2>
+        <p class="contact-desc">Open to full-time roles in robotics, autonomous driving, AI & software engineering. Stuttgart, Germany. Open to relocate. Post-study visa, eligible for immediate employment.</p>
+        <div class="resume-banner">
+            <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text)">Want my resume?</p>
+            <p style="font-size:.84rem;color:var(--text2)">Drop me a line ✦</p>
+            <a href="mailto:harsh23patil96@gmail.com" class="btn-resume" style="margin-top:.5rem">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <rect x="2" y="4" width="20" height="16" rx="3"/>
+                    <path d="M2 7l10 7 10-7"/>
+                </svg>Send me an email
+            </a>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:2rem">
+            <a href="mailto:harsh23patil96@gmail.com" class="citem-icon" title="Email">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="4" width="20" height="16" rx="3"/>
+                    <path d="M2 7l10 7 10-7"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/ha7shpatil" target="_blank" class="citem-icon" title="LinkedIn">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+                    <rect x="2" y="9" width="4" height="12"/>
+                    <circle cx="4" cy="4" r="2"/>
+                </svg>
+            </a>
+            <a href="https://github.com/sca7r" target="_blank" class="citem-icon" title="GitHub">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Designed & built by <span>Harsh Patil</span> · Stuttgart, Germany · 2026</p>
+    </footer>
+
+    <script>
+        // --- Starfield Background ---
+        const canvas = document.getElementById("starfield");
+        const ctx = canvas.getContext("2d");
+        let stars = [], W, H;
+
+        function initStars() {
+            W = canvas.width = innerWidth;
+            H = canvas.height = innerHeight;
+            stars = Array.from({ length: 220 }, () => ({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                r: Math.random() * 1.4 + .3,
+                a: Math.random(),
+                da: (Math.random() - .5) * .007,
+                vx: (Math.random() - .5) * .12,
+                vy: (Math.random() - .5) * .12
+            }));
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, W, H);
+            const d = document.documentElement.getAttribute("data-theme") === "dark";
+            stars.forEach(s => {
+                s.a = Math.max(.08, Math.min(1, s.a + s.da));
+                if (s.a <= .08 || s.a >= 1) s.da *= -1;
+                s.x = (s.x + s.vx + W) % W;
+                s.y = (s.y + s.vy + H) % H;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = d ? `rgba(255,255,255,${s.a * .75})` : `rgba(234,88,12,${s.a * .2})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(drawStars);
+        }
+        addEventListener("resize", initStars);
+        initStars();
+        drawStars();
+
+        // --- Typewriter Effect ---
+        const phrases = [
+            "Software & Systems Engineer", 
+            "Autonomous Driving Specialist", 
+            "AI & Computer Vision Engineer", 
+            "Robotics Engineer", 
+            "Mechanical Engineer", 
+            "Daimler AG · Bosch · HS Coburg", 
+            "Stuttgart, Germany 🇩🇪"
+        ];
+        let pi = 0, ci = 0, del = false;
+        const tw = document.getElementById("tw");
+
+        function type() {
+            const ph = phrases[pi];
+            if (!del) {
+                tw.textContent = ph.slice(0, ++ci);
+                if (ci === ph.length) {
+                    del = true;
+                    setTimeout(type, 2e3);
+                    return;
+                }
+            } else {
+                tw.textContent = ph.slice(0, --ci);
+                if (ci === 0) {
+                    del = false;
+                    pi = (pi + 1) % phrases.length;
+                }
+            }
+            setTimeout(type, del ? 50 : 80);
+        }
+        type();
+
+        // --- Theme Toggle ---
+        // --- Theme Toggle & System Preference ---
+        const h = document.documentElement;
+        const tIcon = document.getElementById("tIcon");
+        const tLabel = document.getElementById("tLabel");
+
+
+        const currentTheme = h.getAttribute("data-theme");
+        tIcon.textContent = currentTheme === "dark" ? "☀" : "🌙";
+        tLabel.textContent = currentTheme === "dark" ? "Light" : "Dark";
+
+// Manual Toggle Function
+        function toggleTheme() {
+            const isDark = h.getAttribute("data-theme") === "dark";
+            const newTheme = isDark ? "light" : "dark";
+    
+            h.setAttribute("data-theme", newTheme);
+            localStorage.setItem("theme", newTheme); 
+    
+            tIcon.textContent = newTheme === "dark" ? "☀" : "🌙";
+            tLabel.textContent = newTheme === "dark" ? "Light" : "Dark";
+        }
+
+// OS Theme Change Handler
+        function handleSystemThemeChange(e) {
+            if (!localStorage.getItem('theme')) {
+                const newTheme = e.matches ? 'dark' : 'light';
+                h.setAttribute('data-theme', newTheme);
+                tIcon.textContent = newTheme === "dark" ? "☀" : "🌙";
+                tLabel.textContent = newTheme === "dark" ? "Light" : "Dark";
+            }
+        }
+
+
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleSystemThemeChange);
+        } else if (mediaQuery.addListener) {
+            mediaQuery.addListener(handleSystemThemeChange);
+        }
+
+        // --- Mobile Menu Toggle ---
+        function toggleMenu() {
+            document.getElementById("navLinks").classList.toggle("open");
+        }
+
+        // --- Navigation Scroll Active State ---
+        const secs = document.querySelectorAll("section[id]");
+        const nas = document.querySelectorAll(".nav-links a");
+        addEventListener("scroll", () => {
+            let c = "";
+            secs.forEach(s => {
+                if (scrollY >= s.offsetTop - 120) c = s.id;
+            });
+            nas.forEach(a => {
+                a.style.color = a.getAttribute("href") === "#" + c ? "var(--accent)" : "";
+            });
+        }, { passive: true });
+
+        nas.forEach(a => a.addEventListener("click", () => document.getElementById("navLinks").classList.remove("open")));
+
+// --- Planet Interactive System ---
+let activePlanet = null;
+
+function showPlanet(id) {
+
+    document.querySelectorAll(".planet-popup").forEach(p => {
+        p.classList.remove("show");
+        setTimeout(() => { 
+            if (!p.classList.contains("show")) p.style.left = "0px"; 
+        }, 200); 
+    });
+
+    if (activePlanet === id) {
+        activePlanet = null;
+        return;
+    }
+    
+    activePlanet = id;
+    const pp = document.getElementById("pp-" + id);
+    const svg = document.getElementById("solarsys");
+    const sr = svg.getBoundingClientRect();
+    const w = document.querySelector(".solar-svg-wrap");
+    const wr = w.getBoundingClientRect();
+    
+
+    const xM = { pl1: 300, pl2: 560, pl3: 820, pl4: 1080 }; 
+    const xF = xM[id] / 1200; 
+    
+    const xP = (xF * sr.width) + (sr.left - wr.left);
+    const tP = (sr.bottom - wr.top) + 12;
+    
+    pp.style.left = xP + "px";
+    pp.style.top = tP + "px";
+    pp.style.transform = "translateX(-50%)";
+    pp.classList.add("show");
+}
+
+document.addEventListener("click", e => {
+ 
+    if (!e.target.closest(".planet-label-btn") && !e.target.closest(".planet-popup") && !e.target.closest(".sol-click")) {
+        document.querySelectorAll(".planet-popup").forEach(p => {
+            p.classList.remove("show");
+            setTimeout(() => { 
+                if (!p.classList.contains("show")) p.style.left = "0px"; 
+            }, 200);
+        });
+        activePlanet = null;
+    }
+});
+    </script>
+</body>
+</html>-->
