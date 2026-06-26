@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio con Cubo</title>
+
+    <!-- 1. CONTENEDOR DE DISEÑO (Solo entra CSS aquí) -->
+    <style>
+        /* Corrección de fuentes de Google */
+    @import url(https://fonts.googleapis.com/css?family=Nunito+Sans);
+    @import url(https://fonts.googleapis.com/css?family=Rubik);
+
+    html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #000000, #1e1b4b, #000000, #0f172a);
+    background-size: 400% 400%;
+    animation: moverFondo 20s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Nunito Sans', sans-serif;
+    perspective: 600px; /* Perspectiva global para el túnel de estrellas */
+}
+
+    .espacio-warp {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        z-index: 1;
+        }
+
+        /* --- LAS RÁFAGAS DE ESTRELLAS INDIVIDUALES --- */
+    .estrella-linea {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 2px;
+        height: 2px;
+        background: #fff;
+        border-radius: 50%;
+        opacity: 0;
+        transform-style: preserve-3d;
+        /* La animación las dispara en el eje Z */
+        animation: warpDisparo 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+        }
+
+        /* ANIMACIÓN DE VELOCIDAD DE LA LUZ: Estira y expande hacia la periferia */
+        @keyframes warpDisparo {
+            0% {
+                transform: rotateZ(var(--angulo)) rotateX(var(--inclinacion)) translateZ(-800px) scale3d(1, 1, 1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                background: #67e8f9; 
+            }
+            70% {
+                
+                background: #fff;
+            }
+            100% {
+                /* Salen por completo de la pantalla hacia la periferia */
+                transform: rotateZ(var(--angulo)) rotateX(var(--inclinacion)) translateZ(400px) scale3d(1, 1, 80);
+                opacity: 0;
+            }
+        }
+
+        .escena {
+            width: 200px;
+            height: 200px;
+            perspective: 800px; 
+            z-index: 5;
+        }
+
+        .escena {
+            width: 200px;
+            height: 200px;
+            perspective: 8000px;
+        }
+
+        .cubo {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: grab;
+            
+        }
+
+        /* CORRECCIÓN: El @keyframes ahora está afuera, suelto en el CSS */
+        
+
+        .cara {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden; /* Cambiado a visible para asegurar el render de prueba */
+            border: 0.75px solid #55325f;
+            background: rgba(102, 63, 117, 0.436);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .enfrente { transform: rotateY(0deg) translateZ(100px); }
+        .atras    { transform: rotateY(180deg) translateZ(100px); }
+        .derecha  { transform: rotateY(90deg) translateZ(100px); }
+        .izquierda{ transform: rotateY(-90deg) translateZ(100px); }
+        .arriba   { transform: rotateX(90deg) translateZ(100px); }
+        .abajo    { transform: rotateX(-90deg) translateZ(100px); }
+        
+        .titulo-fondo {
+        position: absolute;
+        color: rgb(0, 0, 0); /* Blanco muy transparente */
+        font-size: 3.5rem;
+        white-space: nowrap;
+        top: -120px;       /* Lo sube un poco en el eje Y */
+        left: -140px;      /* Lo mueve a la izquierda en el eje X */
+        transform: translateZ(-200px); /* Lo empuja hacia el fondo en el eje Z */
+        pointer-events: none; /* Hace que el mouse lo ignore al hacer clic */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="espacio-warp" id="warpContainer"></div>
+    <div class="escena">
+        <div class="cubo" id="miCubo">
+            <div class="cara enfrente">1</div>
+            <div class="cara atras">2</div>
+            <div class="cara derecha">3</div>
+            <div class="cara izquierda">4</div>
+            <div class="cara arriba">5</div>
+            <div class="cara abajo">6</div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    
+</body>
+</html>
